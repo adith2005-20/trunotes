@@ -24,7 +24,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 
 const Page = () => {
   const [accessCode, setAccessCode] = useState("");
@@ -70,6 +70,7 @@ const Page = () => {
                   setAccessCode(e);
                   setError("");
                 }}
+                pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
               >
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />

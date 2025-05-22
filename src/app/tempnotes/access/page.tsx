@@ -8,6 +8,7 @@ import { toast } from "sonner"
 import Header from "@/app/_components/Header"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
 
 const Page = () => {
     const router = useRouter()
@@ -27,6 +28,7 @@ const Page = () => {
                                 setAccessCode(e);
                                 setError("");
                             }}
+                            pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
                         >
                             <InputOTPGroup>
                                 <InputOTPSlot index={0} />
@@ -43,7 +45,7 @@ const Page = () => {
                             onClick={() => {
                                 router.push(`/tempnotes/access/${accessCode}`)
                             }}
-                            disabled={!accessCode || accessCode.length!=6}
+                            disabled={!accessCode || accessCode.length!=6 || error.length>0}
                         >
                             Submit
                         </Button>
