@@ -74,3 +74,20 @@ export const verification = pgTable("verification", {
  updatedAt: timestamp('updated_at').$defaultFn(() => /* @__PURE__ */ new Date())
 				});
 
+export const tempnote = createTable(
+  "tempnote",
+  (d) => ({
+    id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
+    accessCode: d.varchar({ length: 6 }).notNull().unique(),
+    content: d.text("content").notNull(),
+    createdAt: d
+      .timestamp({ withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    expiresAt: d
+      .timestamp({ withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP + interval '24 hours'`)
+      .notNull(),
+  }),
+  (t) => [index("accessCode_idx").on(t.accessCode)]
+);

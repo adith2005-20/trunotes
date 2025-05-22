@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+25&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
+
+
+
 
 @source "../../node_modules/@daveyplate/better-auth-ui";
 
@@ -124,4 +128,10 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.j25{
+  font-family: "Jersey 25", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
