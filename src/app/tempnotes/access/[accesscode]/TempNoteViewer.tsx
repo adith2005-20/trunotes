@@ -14,7 +14,6 @@ export default function ClientNoteViewer({accesscode}: {accesscode: string}) {
 
   return (
     <>
-      <Header />
       <div className="mt-24 flex h-screen justify-center">
         <Card className="w-full max-w-lg p-4">
           <CardHeader>

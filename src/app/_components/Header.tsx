@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 export default function Header() {
     const router = useRouter();
     return (
-        <header className="flex items-center justify-between fixed top-0 left-0 right-0 z-50 p-4 bg-foreground/90 backdrop-blur-md">
+        <header className="flex items-center justify-between fixed top-0 left-0 right-0 z-50 p-4 bg-foreground/90 backdrop-blur-md dark:bg-background/40">
             <Link href="/">
                 <div className="flex items-center gap-2">
                     <Image src="/trunotes-logo-sm.svg" alt="Trunotes logo" width={32} height={32} />

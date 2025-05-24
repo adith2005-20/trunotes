@@ -6,6 +6,7 @@ import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { Toaster } from "@/components/ui/sonner";
+import Header from "./_components/Header";
 
 export const metadata: Metadata = {
   title: "Trunotes",
@@ -23,9 +24,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
-      <body>
+      <body className="dark">
         <TRPCReactProvider>
-          <Providers>{children}</Providers>
+          <Providers><Header/>{children}</Providers>
           <Toaster position="bottom-left" />
         </TRPCReactProvider>
       </body>

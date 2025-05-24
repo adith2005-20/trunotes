@@ -46,7 +46,6 @@ const Page = () => {
 
   return (
     <>
-      <Header />
       <div className="mt-3/12 flex h-screen items-center justify-center">
         <Card className="w-full p-4 sm:m-4 lg:m-8">
           <CardHeader className="j25 text-4xl font-bold">

@@ -16,11 +16,10 @@ const Page = () => {
     const [error, setError] = useState("");
     return (
         <>
-            <Header />
-            <div className="mt-24 flex h-screen items-center justify-center w-full ">
-                <Card>
-                    <CardHeader><CardTitle className="j25 text-4xl font-bold">Enter access code</CardTitle></CardHeader>
-                    <CardContent>
+            <div className="flex h-screen items-center justify-center w-full ">
+                <Card className="w-full max-w-lg p-2">
+                    <CardHeader><CardTitle className="j25 text-4xl font-bold text-center">Enter access code</CardTitle></CardHeader>
+                    <CardContent className="flex flex-col items-center">
                         <InputOTP
                             maxLength={6}
                             value={accessCode}
@@ -40,7 +39,7 @@ const Page = () => {
                             </InputOTPGroup>
                         </InputOTP>
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className="flex flex-col gap-2 items-center">
                         <Button
                             onClick={() => {
                                 router.push(`/tempnotes/access/${accessCode}`)
@@ -49,6 +48,7 @@ const Page = () => {
                         >
                             Submit
                         </Button>
+                        <span className="text-muted-foreground text-xs mt-2 text-start w-full">Note: Any notes older than 24 hours may be deleted.</span>
                     </CardFooter>
                 </Card>
             </div>

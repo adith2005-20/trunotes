@@ -3,6 +3,20 @@
 @import "tw-animate-css";
 
 
+html{
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+}
+
+prose p a{
+  @apply underline;
+  @apply text-blue-500;
+  @apply cursor-pointer;
+}
+
+ul, ol {
+  list-style: revert;
+}
 
 
 @source "../../node_modules/@daveyplate/better-auth-ui";

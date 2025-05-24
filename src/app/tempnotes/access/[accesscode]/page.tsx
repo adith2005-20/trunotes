@@ -3,7 +3,6 @@ import { HydrateClient } from "@/trpc/server"
 import { api } from "@/trpc/server"
 import { Loader } from "lucide-react"
 import { Suspense } from "react"
-import Header from "@/app/_components/Header"
 
 const Page = async ({ params }: { params: Promise<{ accesscode: string }> }) => {
     const { accesscode } = await params
@@ -11,7 +10,7 @@ const Page = async ({ params }: { params: Promise<{ accesscode: string }> }) => 
     
     return (
         <HydrateClient>
-            <Suspense fallback={<><Header/><Loader className="animate-spin fixed top-1/2 left-1/2 z-50"/></>}>
+            <Suspense fallback={<><Loader className="animate-spin fixed top-1/2 left-1/2 z-50"/></>}>
                 <ClientNoteViewer accesscode={accesscode}/>
             </Suspense>
         </HydrateClient>
