@@ -91,3 +91,21 @@ export const tempnote = createTable(
   }),
   (t) => [index("accessCode_idx").on(t.accessCode)]
 );
+
+export const note = createTable(
+  "note",
+  (d) => ({
+    id: d.text().primaryKey().default(sql`gen_random_uuid()`),
+    title: d.varchar({ length: 256 }).notNull(),
+    content: d.text("content").notNull(),
+    createdAt: d
+      .timestamp({ withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
+    ownerId: d.text("owner_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+    visibleToPublic: d.boolean("visible_to_public").notNull().default(false),
+    // would be a good idea to include custom themes
+  }),
+  (t) => [index("title_idx").on(t.title)]
+);

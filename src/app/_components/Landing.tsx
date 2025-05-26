@@ -9,7 +9,7 @@ const Landing = () => {
     <div className="min-h-256 flex flex-col items-center px-4 md:px-8">
       {/* Hero Section */}
       <div className="w-full max-w-6xl mt-24 mb-16">
-        <h1 className="j25 text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r text-left bg-foreground/90 backdrop-blur-md bg-clip-text text-transparent">
+        <h1 className={`text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r text-left bg-foreground/90 backdrop-blur-md bg-clip-text text-transparent `}>
           Create<br/> stunning<br/> notes.
         </h1>
         

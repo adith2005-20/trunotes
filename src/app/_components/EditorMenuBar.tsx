@@ -1,7 +1,5 @@
 "use client";
 import { useEditor, EditorContent, Editor } from "@tiptap/react";
-import Header from "../_components/Header";
-import StarterKit from "@tiptap/starter-kit";
 import { Button } from "@/components/ui/button";
 import {
   AlignCenter,
@@ -19,20 +17,14 @@ import {
   Strikethrough,
   Underline,
 } from "lucide-react";
-import TaskList from "@tiptap/extension-task-list";
-import TaskItem from "@tiptap/extension-task-item";
-import LinkExtension, { Link } from "@tiptap/extension-link";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
-  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import UnderlineExtension from "@tiptap/extension-underline";
-import TextAlign from "@tiptap/extension-text-align";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,65 +32,78 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function Tiptap() {
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      TaskList,
-      UnderlineExtension,
-      TextAlign.configure({ types: ["heading", "paragraph"] }),
-      TaskItem.configure({ nested: true }),
-      Link.configure({
-        openOnClick: true,
-        autolink: true,
-        defaultProtocol: "https",
-        protocols: ["http", "https"],
-        shouldAutoLink: (url: string) => {
-          try {
-            // construct URL
-            const parsedUrl = url.includes(":")
-              ? new URL(url)
-              : new URL(`https://${url}`);
-
-            // only auto-link if the domain is not in the disallowed list
-            const disallowedDomains = ["phishing.com"];
-            const domain = parsedUrl.hostname;
-
-            return !disallowedDomains.includes(domain);
-          } catch {
-            return false;
-          }
-        },
-      }),
-    ],
-    content: "",
-    editorProps: {
-      attributes: {
-        class:
-          "prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 h-full focus:outline-none",
-      },
-    },
-    autofocus: true,
-    editable: true,
-    injectCSS: false,
-    immediatelyRender: false,
-  });
-
-  if (!editor) return null;
-
-  return (
-    <>
-      <div className="prose mt-24 h-full min-h-72 border p-4">
-        <MenuBar editor={editor} />
-        <EditorContent editor={editor} className="h-full min-h-72" />
-      </div>
-    </>
-  );
-}
-
-const MenuBar = ({ editor }: { editor: Editor }) => {
+export const MenuBar = ({ editor }: { editor: Editor }) => {
     const [open, setOpen] = useState(false);
     const [href, setHref] = useState("");
+    const [keyboardVisible, setKeyboardVisible] = useState(false);
+    const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+  
+    useEffect(() => {
+      const handleResize = () => {
+        const currentHeight = window.innerHeight;
+        const heightDifference = viewportHeight - currentHeight;
+        
+        // If viewport height decreased significantly (usually > 150px), keyboard is likely open
+        const isKeyboardOpen = heightDifference > 150;
+        setKeyboardVisible(isKeyboardOpen);
+        
+        if (!isKeyboardOpen) {
+          setViewportHeight(currentHeight);
+        }
+      };
+  
+      const handleVisualViewportChange = () => {
+        if (window.visualViewport) {
+          const keyboardOpen = window.visualViewport.height < window.innerHeight;
+          setKeyboardVisible(keyboardOpen);
+        }
+      };
+  
+      // Method 1: Listen to window resize (fallback for older browsers)
+      window.addEventListener('resize', handleResize);
+      
+      // Method 2: Use Visual Viewport API (more reliable for modern browsers)
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', handleVisualViewportChange);
+      }
+  
+      // Method 3: Listen for focus events on input elements (additional detection)
+      const handleFocusIn = (e: FocusEvent) => {
+        if (e.target instanceof HTMLElement && (
+          e.target.tagName === 'INPUT' || 
+          e.target.tagName === 'TEXTAREA' || 
+          e.target.contentEditable === 'true'
+        )) {
+          // Small delay to allow keyboard to appear
+          setTimeout(() => setKeyboardVisible(true), 300);
+        }
+      };
+  
+      const handleFocusOut = () => {
+        // Small delay to prevent flickering when switching between inputs
+        setTimeout(() => {
+          if (!document.activeElement || (
+            document.activeElement.tagName !== 'INPUT' && 
+            document.activeElement.tagName !== 'TEXTAREA' && 
+            document.activeElement.getAttribute('contenteditable') !== 'true'
+          )) {
+            setKeyboardVisible(false);
+          }
+        }, 100);
+      };
+  
+      document.addEventListener('focusin', handleFocusIn);
+      document.addEventListener('focusout', handleFocusOut);
+  
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        if (window.visualViewport) {
+          window.visualViewport.removeEventListener('resize', handleVisualViewportChange);
+        }
+        document.removeEventListener('focusin', handleFocusIn);
+        document.removeEventListener('focusout', handleFocusOut);
+      };
+    }, [viewportHeight]);
   
     const handleConfirm = () => {
       if (!href) return;
@@ -118,7 +123,13 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
   
     return (
       <>
-        <div className="bg-card fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 transform items-center gap-2 rounded-lg p-2 shadow">
+        <div 
+          className={`bg-background fixed z-50 flex items-center gap-2 rounded-lg p-2 shadow transition-all duration-300 ${
+            keyboardVisible 
+              ? 'bottom-2 left-1/2 -translate-x-1/2 transform' // Above keyboard
+              : 'bottom-4 left-1/2 -translate-x-1/2 transform' // Normal position
+          }`}
+        >
           {/* Always visible buttons */}
           <Button
             className="rounded-md p-2"
@@ -368,3 +379,4 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
       </>
     );
   };
+  

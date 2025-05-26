@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { Providers } from "./providers";
+import { Jersey_25 } from "next/font/google";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
@@ -17,6 +18,12 @@ export const metadata: Metadata = {
 const geist = Geist({
   subsets: ["latin"],
   variable: "--font-geist-sans",
+});
+
+const j25 = Jersey_25({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-j25",
 });
 
 export default function RootLayout({
