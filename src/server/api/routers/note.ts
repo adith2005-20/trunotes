@@ -4,6 +4,7 @@ import { note } from "@/server/db/schema";
 import { sql,eq, desc, and, lt } from "drizzle-orm";
 import { z } from "zod";
 
+
 export const noteRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
@@ -68,7 +69,7 @@ export const noteRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const notes = await db
-        .select({ title: note.title, id: note.id, updatedAt: note.updatedAt, contentPreview: sql`SUBSTRING(${note.content}, 1, 15)`.as("contentPreview") })
+        .select({ title: note.title, id: note.id, updatedAt: note.updatedAt, contentPreview: sql<string>`SUBSTRING(${note.content}, 1, 64)`.as("contentPreview") })
         .from(note)
         .where(
             and(

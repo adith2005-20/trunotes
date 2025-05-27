@@ -1,8 +1,10 @@
 "use client"
-import React from 'react'
+import React, { Suspense } from 'react'
 import { SignedIn, SignedOut} from '@daveyplate/better-auth-ui'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import NotePreviews from './NotePreviews'
+import { Loader2 } from 'lucide-react'
 
 const Landing = () => {
   return (
@@ -15,7 +17,7 @@ const Landing = () => {
         
       </div>
 
-      {/* Features Grid */}
+      {/* quick access grid */}
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
         {features.map((feature, index) => (
           !feature.authorization && <Link href={feature.url} key={index} className="p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
@@ -30,6 +32,11 @@ const Landing = () => {
     </Link>{" "}
     to view your notes
   </span></SignedOut>
+  <SignedIn>
+    
+    <NotePreviews />
+    
+  </SignedIn>
     </div>
   )
 }
