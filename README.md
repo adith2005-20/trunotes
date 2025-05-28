@@ -1,29 +1,71 @@
-# Create T3 App
+# `TRUNOTES`
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+_Empower your notes, enhance your creativity effortlessly._
 
-## What's next? How do I make an app with this?
+![last-commit](https://img.shields.io/github/last-commit/adith2005-20/trunotes?style=flat&logo=git&logoColor=white&color=0080ff)
+![repo-top-language](https://img.shields.io/github/languages/top/adith2005-20/trunotes?style=flat&color=0080ff)
+![repo-language-count](https://img.shields.io/github/languages/count/adith2005-20/trunotes?style=flat&color=0080ff)
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+---
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Table of Contents
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- [Overview](#overview)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Usage](#usage)
 
-## Learn More
+---
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Overview
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+**Trunotes** is a modern note-taking application built for developers and creators who want performance, simplicity, and flexibility. It’s designed with a mobile-first mindset and leverages full-stack type safety and real-time rendering.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### 🔥 Key Features
 
-## How do I deploy this?
+- **Next.js + tRPC Architecture:** Fully server-side rendered with type safety across client and server using TypeScript and tRPC.
+- **TipTap-Based Editor:** Rich-text editing experience using TipTap, supporting formatting, markdown-style shortcuts, and more.
+- **Neon PostgreSQL:** Backed by a scalable PostgreSQL database hosted on [Neon](https://neon.tech).
+- **Google OAuth Authentication:** Log in quickly using Google accounts with NextAuth integration.
+- **Mobile Responsive:** Seamless usage on both desktop and mobile devices.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **Bun** as the package manager
+- **Node.js** v18+ recommended
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```sh
+   git clone https://github.com/adith2005-20/trunotes
+    ```
+
+2. **Navigate to the project directory:**
+
+   ```sh
+   cd trunotes
+   ```
+
+3. **Install dependencies with Bun:**
+
+   ```sh
+   bun install
+   ```
+
+### Usage
+
+Start the development server:
+
+```sh
+bun run dev
+```
+
+> Note: A .env file has to be configured with the required environment variables as given in `src/env.js`.
+
